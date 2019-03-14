@@ -12,7 +12,7 @@ with open("README.md", "r") as readme:
 exec(open("src/poaching_simulator/version.py", "r").read())
 
 setup(
-    name="blackbook",
+    name="poaching_simulator",
     version=__version__,
     install_requires=requirements,
     author="Nikoleta Glynatsi, Vince Knight",
