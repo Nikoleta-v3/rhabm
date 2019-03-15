@@ -1,5 +1,5 @@
 .vscode/
 
-src/poaching_simulator.egg-info/
-src/poaching_simulator/__pycache__/
+src/rhabm.egg-info/
+src/rhabm/__pycache__/
 tests/__pycache__/

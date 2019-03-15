@@ -1,4 +1,4 @@
-Poaching Simulator
-==================
+rhabm
+=====
 
-An agent based poaching simulation tool written in Python.
+A rhino poaching agent based simulation tool written in Python.

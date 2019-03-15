@@ -9,10 +9,10 @@ requirements = []
 with open("README.md", "r") as readme:
     README = readme.read()
 
-exec(open("src/poaching_simulator/version.py", "r").read())
+exec(open("src/rhabm/version.py", "r").read())
 
 setup(
-    name="poaching_simulator",
+    name="rhabm",
     version=__version__,
     install_requires=requirements,
     author="Nikoleta Glynatsi, Vince Knight",
@@ -21,6 +21,6 @@ setup(
     package_dir={"": "src"},
     url="",
     license="The MIT License (MIT)",
-    description="An agent based poaching simulation tool.",
+    description="A rhino poaching agent based simulation tool.",
     long_description=README,
 )

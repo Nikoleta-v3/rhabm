@@ -5,15 +5,23 @@ UnoccupiedEmoji = "🌲"
 
 
 class Park:
-    """
-    A class for creating the wildlife park.
+    """ A class to represent the wildlife park which is being simulated.
 
     Parameters
-    ----------
-        - width: int
-            The width of the park.
-        - height: int
-            The height of the park.
+    ==========
+
+    width : `int`
+        The park's width.
+    height : `int`
+        The park's height.
+
+    Attributes
+    ==========
+    occupants : `tuple`
+        A tuple of (i, j) coordinates. The current location of the rhino in the park.
+    coordinates : `bool`
+        True when the agent is mobile, False eitherwise. A rhino
+        becomes immobile once they meet a poacher.
     """
 
     def __init__(self, width=5, height=5):
