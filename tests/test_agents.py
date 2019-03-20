@@ -210,3 +210,40 @@ def test_poacher_rep():
 
     poacher_agent.caught = True
     assert poacher_agent.__repr__() == rhabm.CaughtPoacherEmoji
+
+
+def test_security_init_default():
+    park = rhabm.Park()
+    security = rhabm.SecurityOfficer(park=park)
+
+    assert security.vision_radius == 3
+    assert security.movement_radius == 1
+    assert security.target_agent == None
+
+
+def test_security_init():
+    park = rhabm.Park()
+    vision_radius, movement_radius = 2, 2
+
+    security = rhabm.SecurityOfficer(
+        park=park, vision_radius=vision_radius, movement_radius=movement_radius
+    )
+
+    assert security.vision_radius == 2
+    assert security.movement_radius == 2
+    assert security.target_agent == None
+
+def test_security_find_individual():
+    park = rhabm.Park(width=2, height=2)
+    security_agent = rhabm.SecurityOfficer(park=park)
+
+    assert security_agent.find_individual() is False
+
+    poacher_agent = rhabm.Poacher(park=park)
+    assert security_agent.find_individual() == poacher_agent.location
+
+def test_security_rep():
+    park = rhabm.Park()
+
+    security_agent = rhabm.SecurityOfficer(park=park)
+    assert security_agent.__repr__() == rhabm.SecurityEmoji

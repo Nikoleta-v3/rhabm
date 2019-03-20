@@ -7,5 +7,7 @@ from .agents import (
     Poacher,
     PoacherEmoji,
     CaughtPoacherEmoji,
+    SecurityOfficer,
+    SecurityEmoji,
 )
 from .version import __version__

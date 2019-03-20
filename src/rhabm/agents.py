@@ -283,3 +283,53 @@ class Poacher(Rhino):
         if self.caught:
             return CaughtPoacherEmoji
         return PoacherEmoji
+
+
+class SecurityOfficer(Poacher):
+    """ A class to represent a security agent within the simulation.
+
+    Parameters
+    ==========
+
+    park : `Park` instance
+        A park instance. The park which is being simulated.
+    vision_radius : `int`
+        The vision radius of a security guard.
+    movement_radius : `int`
+        The moving radius of a security guard.
+
+    Attributes
+    ==========
+    target_agent : `NoneType` or `Poacher` instance
+        None if the security guards has not spotted a poacher. A poacher
+        instance once the guard has identify a poacher in the park.
+    """
+
+    def __init__(self, park, vision_radius=3, movement_radius=1):
+
+        self.vision_radius = vision_radius
+        self.movement_radius = movement_radius
+        self.target_agent = None
+        super().__init__(park, vision_radius, movement_radius)
+
+    def find_individual(self, target=PoacherEmoji):
+        return super().find_individual(target=target)
+
+    def engage_target(self):
+        """
+        Security guards will engage poachers once they are within their
+        neighbourhood.
+        
+        Poachers are instantly caught and then security continue their watch.
+        """
+        self.target_agent.caught = True
+
+        try:
+            self.target_agent.target_agent.is_mobile = True
+        except AttributeError:
+            pass
+
+        self.is_mobile = True
+
+    def __repr__(self):
+        return SecurityEmoji
