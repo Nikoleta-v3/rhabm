@@ -18,6 +18,12 @@ def test_get_random_unoccupied_cell():
     assert park.get_random_unoccupied_cell() in park.coordinates
 
 
+def test_no_unoccupied_cells():
+    park = rhabm.Park(width=2, height=2)
+    _ = [rhabm.Rhino(park) for _ in range(park.__len__())]
+    assert park.get_random_unoccupied_cell() is False
+
+
 def test_get_neighbours():
     current_location = (1, 1)
     park = rhabm.Park(width=2, height=2)
@@ -32,6 +38,25 @@ def test_get_neighbours():
     park = rhabm.Park(width=5, height=5)
     assert set(park.get_neighbours(*current_location)) == set(
         [(1, 2), (2, 1), (3, 2), (2, 3)]
+    )
+
+    current_location = (2, 2)
+    park = rhabm.Park(width=5, height=5)
+    assert set(park.get_neighbours(*current_location, radius=2)) == set(
+        [
+            (0, 2),
+            (1, 1),
+            (1, 2),
+            (1, 3),
+            (2, 0),
+            (2, 1),
+            (2, 3),
+            (2, 4),
+            (3, 1),
+            (3, 2),
+            (3, 3),
+            (4, 2),
+        ]
     )
 
 
