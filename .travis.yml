@@ -1,0 +1,12 @@
+language: python
+python:
+  - 3.6
+
+install:
+  - python setup.py develop
+  - pip install pytest
+  - pip install pytest-cov
+
+script:
+  - pytest .
+  - pytest --cov=rhabm tests
