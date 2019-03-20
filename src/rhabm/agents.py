@@ -92,7 +92,7 @@ class Poacher(Rhino):
     time_to_remove_rhino : `int`
         Time units the poacher needs to remove a horn.
     minimum_horn_value_threshold : `float`
-        How selective is the poacher
+        The threshold for which a poacher will behave selective.
     target_value : `int`
         The amount of rhino horn value the poacher needs to collect before
         leaving the park.
@@ -161,7 +161,13 @@ class Poacher(Rhino):
         return False
 
     def move(self):
+        """
+        A method for moving. A poacher will move towards the closest target
+        within their vision.
 
+        If there are no targets within their vision, they move randomly. If
+        poachers are next to a rhino they engage the target.
+        """
         if self.is_mobile:
             target_cell_in_vision = self.find_individual()
             neighbours = [
@@ -171,11 +177,9 @@ class Poacher(Rhino):
                 )
                 if self.park.occupants[i][j] == UnoccupiedEmoji
             ]
-
             if target_cell_in_vision is not False:
-
                 if target_cell_in_vision in self.park.get_neighbours(
-                    *self.location
+                    *self.location, radius=self.movement_radius
                 ):
                     target_agent = self.park.occupants[
                         target_cell_in_vision[0]
@@ -216,6 +220,12 @@ class Poacher(Rhino):
             self.engage_target()
 
     def engage_target(self):
+        """
+        If poachers are next to a target they start hunting. While the rhino is
+        alive a poacher stays immobile. Once the horn has been removed a poacher
+        checks whether the target value has been satisfied. If yes the poacher
+        starts exiting the park, otherwise the poacher keeps on hunting.
+        """
         if self.caught is False:
             if self.time_to_remove_rhino > 0:
                 self.time_to_remove_rhino -= 1
@@ -273,32 +283,3 @@ class Poacher(Rhino):
         if self.caught:
             return CaughtPoacherEmoji
         return PoacherEmoji
-
-
-class SecurityOfficer(Poacher):
-
-    def __init__(self, park,
-                 vision_radius=3,
-                 movement_radius=1,
-                ):
-
-        self.vision_radius = vision_radius
-        self.movement_radius = movement_radius
-        self.target_agent = None
-        super().__init__(park)
-
-    def find_individual(self, target=PoacherEmoji):
-        return super().find_individual(target=target)
-
-    def engage_target(self):
-        self.target_agent.caught = True
-
-        try:
-            self.target_agent.target_agent.is_mobile = True
-        except AttributeError:
-            pass
-
-        self.is_mobile = True
-
-    def __repr__(self):
-        return SecurityEmoji
