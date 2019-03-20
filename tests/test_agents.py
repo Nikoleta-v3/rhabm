@@ -233,6 +233,7 @@ def test_security_init():
     assert security.movement_radius == 2
     assert security.target_agent == None
 
+
 def test_security_find_individual():
     park = rhabm.Park(width=2, height=2)
     security_agent = rhabm.SecurityOfficer(park=park)
@@ -241,6 +242,7 @@ def test_security_find_individual():
 
     poacher_agent = rhabm.Poacher(park=park)
     assert security_agent.find_individual() == poacher_agent.location
+
 
 def test_security_rep():
     park = rhabm.Park()
