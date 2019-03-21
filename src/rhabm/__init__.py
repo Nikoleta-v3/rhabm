@@ -10,4 +10,5 @@ from .agents import (
     SecurityOfficer,
     SecurityEmoji,
 )
+from .main import simulate
 from .version import __version__
