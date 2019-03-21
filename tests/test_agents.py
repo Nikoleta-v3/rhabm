@@ -41,6 +41,16 @@ def test_rhino_move():
     )
 
 
+def test_rhino_cannot_move():
+    park = rhabm.Park(height=2, width=1)
+    rhino_agents = [rhabm.Rhino(park=park) for _ in range(2)]
+
+    current_location = rhino_agents[0].location
+    rhino_agents[0].move()
+
+    assert current_location == rhino_agents[0].location
+
+
 def test_rhino_repr():
     park = rhabm.Park()
 
@@ -202,6 +212,46 @@ def test_engage_target_with_poacher_leaving_the_park():
     )
 
 
+def test_poacher_is_in_park_after_killing_before_exit():
+    park = rhabm.Park(width=5, height=5)
+    poacher_agent = rhabm.Poacher(
+        park=park, vision_radius=4, movement_radius=1, time_to_remove_rhino=1
+    )
+    rhino_agent = rhabm.Rhino(park=park)
+
+    rhino_agent.park.occupants[rhino_agent.location[0]][
+        rhino_agent.location[1]
+    ] = rhabm.UnoccupiedEmoji
+    rhino_agent.location = (2, 1)
+    rhino_agent.park.occupants[rhino_agent.location[0]][
+        rhino_agent.location[1]
+    ] = rhino_agent
+
+    if poacher_agent.location != (2, 1):
+        poacher_agent.park.occupants[poacher_agent.location[0]][
+            poacher_agent.location[1]
+        ] = rhabm.UnoccupiedEmoji
+    poacher_agent.location = (2, 2)
+    poacher_agent.park.occupants[poacher_agent.location[0]][
+        poacher_agent.location[1]
+    ] = poacher_agent
+
+    poacher_agent.move()
+    assert rhabm.RhinoEmoji in set(
+        [occupant.__repr__() for row in park.occupants for occupant in row]
+    )
+
+    for tick in range(2):
+        poacher_agent.move()
+    assert rhabm.DeadRhinoEmoji in set(
+        [occupant.__repr__() for row in park.occupants for occupant in row]
+    )
+
+    for tick, position in zip(range(2), [(1, 2), (0, 2)]):
+        poacher_agent.move()
+        assert poacher_agent.location == position
+
+
 def test_poacher_rep():
     park = rhabm.Park()
 
@@ -242,6 +292,21 @@ def test_security_find_individual():
 
     poacher_agent = rhabm.Poacher(park=park)
     assert security_agent.find_individual() == poacher_agent.location
+
+
+def test_security_engage_target():
+    park = rhabm.Park(width=1, height=2)
+    security_agent = rhabm.SecurityOfficer(park=park)
+    poacher_agent = rhabm.Poacher(park=park)
+
+    security_agent.move()
+    assert security_agent.is_mobile is False
+
+    security_agent.move()
+    assert security_agent.is_mobile is True
+    assert rhabm.CaughtPoacherEmoji in set(
+        [occupant.__repr__() for row in park.occupants for occupant in row]
+    )
 
 
 def test_security_rep():

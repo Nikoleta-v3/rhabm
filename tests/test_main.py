@@ -23,6 +23,7 @@ def test_simulate_returns_park():
     assert simulation.width == width
     assert isinstance(simulation.__repr__(), str)
 
+
 def test_simulate_with_history():
     width = 5
     height = 5
@@ -39,13 +40,14 @@ def test_simulate_with_history():
         number_of_poachers=number_of_poachers,
         number_of_security_agents=number_of_security_agents,
         clock=clock,
-        keep_history=keep_history
+        keep_history=keep_history,
     )
 
     assert isinstance(simulation, rhabm.Park)
     assert simulation.height == height
     assert simulation.width == width
     assert len(simulation.history) == clock
+
 
 def test_simulate_with_non_symmetrical_park():
     width = 1
