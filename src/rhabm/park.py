@@ -30,7 +30,7 @@ class Park:
         ]
         self.width = width
         self.height = height
-        self.coordinates = list(itertools.product(range(width), range(height)))
+        self.coordinates = list(itertools.product(range(height), range(width)))
 
     def get_random_unoccupied_cell(self):
         """
@@ -38,6 +38,7 @@ class Park:
         """
         random.shuffle(self.coordinates)
         for i, j in self.coordinates:
+            print(i, j)
             if self.occupants[i][j] == UnoccupiedEmoji:
                 return i, j
         return False
