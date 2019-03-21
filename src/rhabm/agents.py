@@ -213,7 +213,7 @@ class Poacher(Rhino):
                 ] = UnoccupiedEmoji
                 self.location = new_location
                 self.park.occupants[self.location[0]][self.location[1]] = self
-            except IndexError:
+            except (IndexError, ValueError) as error:
                 pass
 
         else:
