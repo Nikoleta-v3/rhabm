@@ -38,7 +38,6 @@ class Park:
         """
         random.shuffle(self.coordinates)
         for i, j in self.coordinates:
-            print(i, j)
             if self.occupants[i][j] == UnoccupiedEmoji:
                 return i, j
         return False
