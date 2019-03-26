@@ -4,6 +4,11 @@ import random
 UnoccupiedEmoji = "🌲"
 
 
+class Unoccupied:
+    def __repr__(self):
+        return UnoccupiedEmoji
+
+
 class Park:
     """ A class to represent the wildlife park which is being simulated.
 
@@ -26,7 +31,7 @@ class Park:
 
     def __init__(self, width=5, height=5):
         self.occupants = [
-            [UnoccupiedEmoji for _ in range(width)] for _ in range(height)
+            [Unoccupied() for _ in range(width)] for _ in range(height)
         ]
         self.width = width
         self.height = height
@@ -38,7 +43,7 @@ class Park:
         """
         random.shuffle(self.coordinates)
         for i, j in self.coordinates:
-            if self.occupants[i][j] == UnoccupiedEmoji:
+            if self.occupants[i][j].__repr__() == UnoccupiedEmoji:
                 return i, j
         return False
 

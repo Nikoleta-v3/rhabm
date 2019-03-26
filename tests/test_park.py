@@ -3,13 +3,18 @@ import pytest
 import rhabm
 
 
+def test_unoccupied_init():
+    unoccupied_cell = rhabm.Unoccupied()
+    assert unoccupied_cell.__repr__() == rhabm.UnoccupiedEmoji
+
+
 def test_init():
     park = rhabm.Park(width=2, height=2)
     assert park.width == 2
     assert park.height == 2
-    assert set([occupant for row in park.occupants for occupant in row]) == set(
-        rhabm.UnoccupiedEmoji
-    )
+    assert set(
+        [occupant.__repr__() for row in park.occupants for occupant in row]
+    ) == set(rhabm.UnoccupiedEmoji)
     assert park.coordinates == [(0, 0), (0, 1), (1, 0), (1, 1)]
 
 

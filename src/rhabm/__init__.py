@@ -1,4 +1,4 @@
-from .park import Park, UnoccupiedEmoji
+from .park import Park, Unoccupied, UnoccupiedEmoji
 from .agents import (
     euclidean_distance,
     Rhino,

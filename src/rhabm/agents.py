@@ -1,7 +1,6 @@
 """A file which contains classes for the agents involved in the simulation."""
 import random
-
-from rhabm import UnoccupiedEmoji
+import rhabm
 
 RhinoEmoji = "🦏"
 DeadRhinoEmoji = "💀"
@@ -59,13 +58,14 @@ class Rhino:
                     [
                         (i, j)
                         for i, j in self.park.get_neighbours(*self.location)
-                        if self.park.occupants[i][j] == UnoccupiedEmoji
+                        if self.park.occupants[i][j].__repr__()
+                        == rhabm.UnoccupiedEmoji
                     ]
                 )
 
                 self.park.occupants[self.location[0]][
                     self.location[1]
-                ] = UnoccupiedEmoji
+                ] = rhabm.Unoccupied()
                 self.location = new_location
                 self.park.occupants[self.location[0]][self.location[1]] = self
             except IndexError:
@@ -175,7 +175,7 @@ class Poacher(Rhino):
                 for i, j in self.park.get_neighbours(
                     *self.location, radius=self.movement_radius
                 )
-                if self.park.occupants[i][j] == UnoccupiedEmoji
+                if self.park.occupants[i][j].__repr__() == rhabm.UnoccupiedEmoji
             ]
             if target_cell_in_vision is not False:
                 if target_cell_in_vision in self.park.get_neighbours(
@@ -210,7 +210,7 @@ class Poacher(Rhino):
                 new_location = random.choice(potential_cells)
                 self.park.occupants[self.location[0]][
                     self.location[1]
-                ] = UnoccupiedEmoji
+                ] = rhabm.Unoccupied()
                 self.location = new_location
                 self.park.occupants[self.location[0]][self.location[1]] = self
             except (IndexError, ValueError) as error:
@@ -267,7 +267,7 @@ class Poacher(Rhino):
 
                 self.park.occupants[self.location[0]][
                     self.location[1]
-                ] = UnoccupiedEmoji
+                ] = rhabm.Unoccupied()
                 if (
                     0 <= new_location[0] < self.park.width
                     and 0 <= new_location[1] < self.park.height
