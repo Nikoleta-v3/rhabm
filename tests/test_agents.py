@@ -115,7 +115,7 @@ def test_poacher_move_towards_rhino():
 
     rhino_agent.park.occupants[rhino_agent.location[0]][
         rhino_agent.location[1]
-    ] = rhabm.UnoccupiedEmoji
+    ] = rhabm.Unoccupied()
     rhino_agent.location = (0, 0)
     rhino_agent.park.occupants[rhino_agent.location[0]][
         rhino_agent.location[1]
@@ -124,7 +124,7 @@ def test_poacher_move_towards_rhino():
     if poacher_agent.location != (0, 0):
         poacher_agent.park.occupants[poacher_agent.location[0]][
             poacher_agent.location[1]
-        ] = rhabm.UnoccupiedEmoji
+        ] = rhabm.Unoccupied()
     poacher_agent.location = (2, 2)
     poacher_agent.park.occupants[poacher_agent.location[0]][
         poacher_agent.location[1]
@@ -221,7 +221,7 @@ def test_poacher_is_in_park_after_killing_before_exit():
 
     rhino_agent.park.occupants[rhino_agent.location[0]][
         rhino_agent.location[1]
-    ] = rhabm.UnoccupiedEmoji
+    ] = rhabm.Unoccupied()
     rhino_agent.location = (2, 1)
     rhino_agent.park.occupants[rhino_agent.location[0]][
         rhino_agent.location[1]
@@ -230,7 +230,7 @@ def test_poacher_is_in_park_after_killing_before_exit():
     if poacher_agent.location != (2, 1):
         poacher_agent.park.occupants[poacher_agent.location[0]][
             poacher_agent.location[1]
-        ] = rhabm.UnoccupiedEmoji
+        ] = rhabm.Unoccupied()
     poacher_agent.location = (2, 2)
     poacher_agent.park.occupants[poacher_agent.location[0]][
         poacher_agent.location[1]
