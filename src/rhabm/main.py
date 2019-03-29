@@ -16,7 +16,7 @@ def simulate(
     target_value=1,
     clock=200,
     keep_history=False,
-    seed=0,
+    seed=None
 ):
     """ A function for running the simulation.
 
@@ -47,6 +47,8 @@ def simulate(
         The time units for which the simulation is run.
     keep_history : `bool`
         Keep tracks of history if True. False otherwise.
+    seed : `int`
+        The seed of the experiment.
     """
 
     park = rhabm.Park(width=width, height=height)
@@ -77,6 +79,8 @@ def simulate(
     if keep_history:
         park.history = []
 
+    if seed:
+        random.seed(seed)
     for tick in range(clock):
         random.shuffle(agents)
         if keep_history:
