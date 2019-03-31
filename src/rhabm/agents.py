@@ -189,19 +189,21 @@ class Poacher(Rhino):
                         self.target_agent = target_agent
                         self.target_agent.is_mobile = False
                         return None
-
-                best_next_distance = min(
-                    [
-                        euclidean_distance(cell, target_cell_in_vision)
+                try:
+                    best_next_distance = min(
+                        [
+                            euclidean_distance(cell, target_cell_in_vision)
+                            for cell in neighbours
+                        ]
+                    )
+                    potential_cells = [
+                        cell
                         for cell in neighbours
+                        if euclidean_distance(cell, target_cell_in_vision)
+                        == best_next_distance
                     ]
-                )
-                potential_cells = [
-                    cell
-                    for cell in neighbours
-                    if euclidean_distance(cell, target_cell_in_vision)
-                    == best_next_distance
-                ]
+                except ValueError:
+                    potential_cells = []
 
             else:
                 potential_cells = neighbours
@@ -213,7 +215,7 @@ class Poacher(Rhino):
                 ] = rhabm.Unoccupied()
                 self.location = new_location
                 self.park.occupants[self.location[0]][self.location[1]] = self
-            except (IndexError, ValueError) as error:
+            except IndexError:
                 pass
 
         else:
@@ -318,7 +320,7 @@ class SecurityOfficer(Poacher):
     def engage_target(self):
         """
         Security guards will engage poachers once they are within their
-        neighbourhood.
+        neighborhood.
         
         Poachers are instantly caught and then security continue their watch.
         """

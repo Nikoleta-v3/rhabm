@@ -16,7 +16,7 @@ def simulate(
     target_value=1,
     clock=200,
     keep_history=False,
-    seed=None
+    seed=None,
 ):
     """ A function for running the simulation.
 
