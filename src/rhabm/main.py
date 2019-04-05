@@ -87,6 +87,7 @@ def simulate(
             park.history.append(park.__repr__())
 
         for agent in agents:
-            agent.move()
+            if agent.caught is False:
+                agent.move()
 
     return park
