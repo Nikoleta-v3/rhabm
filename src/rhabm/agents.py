@@ -35,7 +35,7 @@ class Rhino:
     is_mobile : `bool`
         True when the agent is mobile, False eitherwise. A rhino
         becomes immobile once they meet a poacher.
-    dead : `bool`
+    caught : `bool`
         False when the rhino is alive, True otherwise.
     """
 
@@ -45,7 +45,7 @@ class Rhino:
         self.value = value
         self.park.occupants[self.location[0]][self.location[1]] = self
         self.is_mobile = True
-        self.dead = False
+        self.caught = False
 
     def move(self):
         """
@@ -72,7 +72,7 @@ class Rhino:
                 pass
 
     def __repr__(self):
-        if self.dead is False:
+        if self.caught is False:
             return RhinoEmoji
         return DeadRhinoEmoji
 
@@ -231,8 +231,8 @@ class Poacher(Rhino):
         if self.caught is False:
             if self.time_to_remove_rhino > 0:
                 self.time_to_remove_rhino -= 1
-            elif not self.target_agent.dead:
-                self.target_agent.dead = True
+            elif not self.target_agent.caught:
+                self.target_agent.caught = True
                 self.target_value -= self.target_agent.value
             elif self.target_value <= 0:
                 new_location = min(

@@ -24,7 +24,7 @@ def test_rhino_init():
     assert rhino_agent.value == 0.8
 
     assert rhino_agent.is_mobile
-    assert rhino_agent.dead is False
+    assert rhino_agent.caught is False
 
 
 def test_rhino_move():
@@ -57,7 +57,7 @@ def test_rhino_repr():
     rhino_agent = rhabm.Rhino(park=park, value=0.8)
     assert rhino_agent.__repr__() == rhabm.RhinoEmoji
 
-    rhino_agent.dead = True
+    rhino_agent.caught = True
     assert rhino_agent.__repr__() == rhabm.DeadRhinoEmoji
 
 
